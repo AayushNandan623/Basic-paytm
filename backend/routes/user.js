@@ -4,12 +4,13 @@ const z = require("zod");
 const User = require("../db");
 const JWT_SECRET = require("../config");
 const jwt = require("jsonwebtoken");
+const authMiddleware = require("../middleware");
 const zodSchemaSignUp = z.object({
   userName: z
     .string({
       required_error: "Username should be at least 6 characters.",
     })
-    .email()
+
     .min(6),
   firstName: z.string({ require_error: "Enter valid name" }).max(50),
   lastName: z.string({ require_error: "Enter valid name" }).max(50),
@@ -41,7 +42,7 @@ router.post("/signup", async (req, res) => {
   const parsedOutput = zodSchemaSignUp.safeParse(userDetails);
   if (parsedOutput.success) {
     const user = await User.findOne({ userName: userDetails.userName });
-    if (user._id) {
+    if (user) {
       res
         .status(411)
         .json({ message: "Email already taken / Incorrect inputs" });
@@ -86,5 +87,9 @@ router.post("/signin", async (req, res) => {
       message: "Incorrect input provided",
     });
   }
+});
+
+router.get("/data", authMiddleware, (req, res) => {
+  res.json({ message: "data" });
 });
 module.exports = router;
