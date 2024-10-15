@@ -1,7 +1,9 @@
+const dotenv = require("dotenv");
 const mongoose = require("mongoose");
+dotenv.config();
 const connection = async () => {
   try {
-    await mongoose.connect("mongodb://localhost:27017/paytm");
+    await mongoose.connect(process.env.MONGO_URI);
     console.log("Connected to db ... ");
   } catch (e) {
     console.log("Error message : ", error.message);
