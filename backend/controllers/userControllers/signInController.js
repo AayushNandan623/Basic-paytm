@@ -1,5 +1,5 @@
-const { User } = require("../db");
-const signInSchema = require("../schema/signInSchema");
+const { User } = require("../../db");
+const signInSchema = require("../../schema/zodSchema/signInSchema");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const bcrypt = require("bcrypt");

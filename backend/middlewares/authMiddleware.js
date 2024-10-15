@@ -8,7 +8,8 @@ const jwtAuthMiddleware = async (req, res, next) => {
     try {
       const decoded = jwt.verify(jwtToken, process.env.JWT_SECRET);
       if (decoded) {
-        res._id = decoded._id;
+        
+        req.userId = decoded._id;
         next();
       } else {
         res.status(400).json({ msg: "Failed Authentication" });

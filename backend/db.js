@@ -32,6 +32,7 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
+    trim: true,
     require: true,
     minLength: 6,
   },
@@ -51,6 +52,7 @@ const accountSchema = new mongoose.Schema({
     default: 0,
   },
 });
+
 const User = new mongoose.model("User", userSchema);
 
 const Account = new mongoose.model("Account", accountSchema);

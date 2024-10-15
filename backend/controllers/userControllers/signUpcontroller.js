@@ -1,8 +1,8 @@
 require("dotenv").config();
 const JWT_SECRET = process.env.JWT_SECRET;
-const {User} = require("../db");
+const { User, Account } = require("../../db");
 const jwt = require("jsonwebtoken");
-const signUpSchema = require("../schema/signUpSchema");
+const signUpSchema = require("../../schema/zodSchema/signUpSchema");
 const bcrypt = require("bcrypt");
 
 const signUp = async (req, res) => {
@@ -26,6 +26,10 @@ const signUp = async (req, res) => {
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             password: hashedPassword,
+          });
+          await Account.create({
+            userId: newUser._id,
+            balance: Math.floor(1 + Math.random() * 10000),
           });
           const jwtToken = jwt.sign(
             { userName: userDetails.userName, _id: newUser._id },
