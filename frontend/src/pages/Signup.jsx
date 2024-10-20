@@ -5,11 +5,13 @@ import ButtonComp from "../components/ButtonComp";
 import BottomWarning from "../components/BottomWarning";
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 function Signup() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
   return (
     <>
       <div className=" bg-neutral-500 h-screen flex flex-col justify-center items-center">
@@ -44,13 +46,18 @@ function Signup() {
             label="Password"
           />
           <ButtonComp
-            onClick={(e) => {
-              axios.post("http://localhost:3000/api/v1/user/signup", {
-                userName,
-                firstName,
-                lastName,
-                password,
-              });
+            onClick={async (e) => {
+              const response = await axios.post(
+                "http://localhost:3000/api/v1/user/signup",
+                {
+                  userName,
+                  firstName,
+                  lastName,
+                  password,
+                }
+              );
+              localStorage.setItem("token", response.data.token);
+              if (response.data.token) navigate("/dashboard");
             }}
             label="Sign Up"
           />

@@ -5,10 +5,11 @@ require("dotenv").config();
 const bcrypt = require("bcrypt");
 const signIn = async (req, res) => {
   const userInput = {
-    userName: req.body.userName,
-    password: req.body.password,
+    userName: req.query.userName,
+    password: req.query.password,
   };
   const parsedOutput = signInSchema.safeParse(userInput);
+  console.log(userInput);
   if (parsedOutput.success) {
     try {
       const userD = await User.findOne({

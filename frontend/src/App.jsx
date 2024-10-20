@@ -10,7 +10,7 @@ function App() {
         <Route path="/signup" element={<Signup />}></Route>
         <Route path="/signin" element={<Signin></Signin>}></Route>
         <Route path="/dashboard" element={<Dashboard></Dashboard>}></Route>
-        <Route path="/send" element={<Sendmoney></Sendmoney>}></Route>
+        <Route path={`/send/:to`} element={<Sendmoney></Sendmoney>}></Route>
       </Routes>
     </BrowserRouter>
   );
