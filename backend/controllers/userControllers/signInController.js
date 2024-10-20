@@ -9,7 +9,6 @@ const signIn = async (req, res) => {
     password: req.query.password,
   };
   const parsedOutput = signInSchema.safeParse(userInput);
-  console.log(userInput);
   if (parsedOutput.success) {
     try {
       const userD = await User.findOne({
